@@ -139,6 +139,9 @@ unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
     case token::string_e:
         if (m_convert_strings)
         {
+#if ARGO_NOTHROW
+            return unique_ptr<json>(new json(utf8::json_string_to_utf8(t.get_raw_value())));
+#else
             try
             {
                 return unique_ptr<json>(new json(utf8::json_string_to_utf8(t.get_raw_value())));
@@ -148,6 +151,7 @@ unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
                 e.add_byte_index(m_reader.get_byte_index());
                 throw e;
             }
+#endif
         }
         else
         {
