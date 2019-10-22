@@ -59,7 +59,7 @@ int reader::next()
 
         if (++m_byte_index > m_max_message_length)
         {
-            throw json_io_exception(json_exception::message_too_long_e, m_max_message_length);
+            ARGO_THROW( json_io_exception,json_exception::message_too_long_e, m_max_message_length);
         }
 
         return res;
@@ -80,7 +80,7 @@ void reader::put_back(int c)
     }
     else
     {
-        throw json_io_exception(json_io_exception::too_many_put_back_e);
+        ARGO_THROW( json_io_exception,json_io_exception::too_many_put_back_e);
     }
 }
 

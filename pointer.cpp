@@ -160,7 +160,7 @@ pointer::token pointer::translate_uri_token(const string &pointer, size_t &start
     }
     else
     {
-        throw json_pointer_exception(json_exception::syntax_error_in_pointer_string_e, start - 1);
+        ARGO_THROW( json_pointer_exception,json_exception::syntax_error_in_pointer_string_e, start - 1);
     }
 }
 
@@ -186,13 +186,13 @@ pointer::token pointer::translate_jsonp_token(const string &pointer, size_t &sta
                     }
                     else
                     {
-                        throw json_pointer_exception(json_exception::syntax_error_in_pointer_string_e, start - 1);
+                        ARGO_THROW( json_pointer_exception,json_exception::syntax_error_in_pointer_string_e, start - 1);
                     }
                     start++;
                 }
                 else
                 {
-                    throw json_pointer_exception(json_exception::syntax_error_in_pointer_string_e, start - 1);
+                    ARGO_THROW( json_pointer_exception,json_exception::syntax_error_in_pointer_string_e, start - 1);
                 }
             }
             else
@@ -205,7 +205,7 @@ pointer::token pointer::translate_jsonp_token(const string &pointer, size_t &sta
     }
     else
     {
-        throw json_pointer_exception(json_exception::syntax_error_in_pointer_string_e, start - 1);
+        ARGO_THROW( json_pointer_exception,json_exception::syntax_error_in_pointer_string_e, start - 1);
     }
 }
 
@@ -239,7 +239,7 @@ int pointer::from_hex(const string &s, size_t index)
     }
     else
     {
-        throw json_pointer_exception(json_exception::syntax_error_in_pointer_string_e, index - 1);
+        ARGO_THROW( json_pointer_exception,json_exception::syntax_error_in_pointer_string_e, index - 1);
     }
 }
 

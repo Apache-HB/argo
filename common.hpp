@@ -41,7 +41,7 @@
 #endif
 
 #ifndef ARGO_THROW
-#   define ARGO_THROW(Type, ...) throw Type(__VA_ARGS__)
+#   define ARGO_THROW(Type, ...) throw Type(__VA_ARGS__);
 #endif
 
 #ifdef _MSC_VER

@@ -81,7 +81,7 @@ unique_ptr<json> parser::parse_number_int(const token &t)
         }
         else
         {
-            throw json_parser_exception(
+            ARGO_THROW(json_parser_exception,
                         json_parser_exception::number_out_of_range_e,
                         t.get_raw_value(),
                         m_reader.get_byte_index());
@@ -101,7 +101,7 @@ unique_ptr<json> parser::parse_number_double(const token &t)
     else
     {
         // We know the float is syntactically correct so this has to be a range error.
-        throw json_parser_exception(
+        ARGO_THROW( json_parser_exception,
                             json_parser_exception::number_out_of_range_e,
                             t.get_raw_value(),
                             m_reader.get_byte_index());
@@ -160,7 +160,7 @@ unique_ptr<json> parser::parse_value(lexer &l, size_t nesting_depth)
     case token::null_e:
         return unique_ptr<json>(new json);
     default:
-        throw json_parser_exception(
+        ARGO_THROW( json_parser_exception,
                             json_parser_exception::unexpected_token_e,
                             t.get_raw_value(),
                             m_reader.get_byte_index());
@@ -171,7 +171,7 @@ unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
 {
     if (nesting_depth > m_max_nesting_depth)
     {
-        throw json_parser_exception(
+        ARGO_THROW( json_parser_exception,
                             json_parser_exception::maximum_nesting_depth_exceeded_e,
                             m_max_nesting_depth,
                             m_reader.get_byte_index());
@@ -205,7 +205,7 @@ unique_ptr<json> parser::parse_array(lexer &l, size_t nesting_depth)
         }
         else
         {
-            throw json_parser_exception(
+            ARGO_THROW( json_parser_exception,
                             json_parser_exception::unexpected_token_e,
                             t2.get_raw_value(),
                             m_reader.get_byte_index());
@@ -234,7 +234,7 @@ void parser::parse_name_value_pair(lexer &l, unique_ptr<json> &object, size_t ne
     }
     else
     {
-        throw json_parser_exception(
+        ARGO_THROW( json_parser_exception,
                         json_parser_exception::unexpected_token_e,
                         t1.get_raw_value(),
                         m_reader.get_byte_index());
@@ -244,7 +244,7 @@ void parser::parse_name_value_pair(lexer &l, unique_ptr<json> &object, size_t ne
 
     if (t2.get_type() != token::name_separator_e)
     {
-        throw json_parser_exception(
+        ARGO_THROW( json_parser_exception,
                             json_parser_exception::unexpected_token_e,
                             t2.get_raw_value(),
                             m_reader.get_byte_index());
@@ -257,7 +257,7 @@ unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
 {
     if (nesting_depth > m_max_nesting_depth)
     {
-        throw json_parser_exception(
+        ARGO_THROW( json_parser_exception,
                             json_parser_exception::maximum_nesting_depth_exceeded_e,
                             m_max_nesting_depth,
                             m_reader.get_byte_index());
@@ -293,7 +293,7 @@ unique_ptr<json> parser::parse_object(lexer &l, size_t nesting_depth)
         }
         else
         {
-            throw json_parser_exception(
+            ARGO_THROW( json_parser_exception,
                         json_parser_exception::unexpected_token_e,
                         t2.get_raw_value(),
                         m_reader.get_byte_index());
@@ -320,7 +320,7 @@ unique_ptr<json> parser::parse()
         {
             if ((c != 0x20) && (c != 0x09) && (c != 0x0A) && (c != 0x0D))
             {
-                throw json_parser_exception(json_parser_exception::invalid_character_e, m_reader.get_byte_index());
+                ARGO_THROW( json_parser_exception,json_parser_exception::invalid_character_e, m_reader.get_byte_index());
             }
         }
     }
@@ -372,7 +372,7 @@ unique_ptr<json> parser::load(const string &file_name)
     }
     else
     {
-        throw json_io_exception(json_io_exception::file_open_failed_e, errno);
+        ARGO_THROW( json_io_exception,json_io_exception::file_open_failed_e, errno);
     }
 }
 

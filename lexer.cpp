@@ -109,9 +109,9 @@ void lexer::read_token()
             read_null();
             break;
         case EOF:
-            throw json_parser_exception(json_parser_exception::unexpected_eof_e, m_reader.get_byte_index());
+            ARGO_THROW(json_parser_exception, json_parser_exception::unexpected_eof_e, m_reader.get_byte_index());
         default:
-            throw json_parser_exception(json_parser_exception::invalid_character_e, m_reader.get_byte_index());
+            ARGO_THROW(json_parser_exception, json_parser_exception::invalid_character_e, m_reader.get_byte_index());
         }
     }
 }
@@ -120,7 +120,7 @@ void lexer::append_to_number_buffer(char *s, size_t &index, int c)
 {
     if (index >= m_max_token_length)
     {
-        throw json_parser_exception(
+        ARGO_THROW( json_parser_exception,
                 json_parser_exception::number_too_long_e,
                 m_max_token_length,
                 m_reader.get_byte_index());
@@ -137,7 +137,7 @@ void lexer::throw_number_exception(int c)
     }
     else
     {
-        throw json_parser_exception(
+        ARGO_THROW( json_parser_exception,
                 json_parser_exception::invalid_number_e,
                 static_cast<char>(c),
                 m_reader.get_byte_index());
@@ -277,7 +277,7 @@ void lexer::read_string()
         c = m_reader.next();
         if (c <= 0xf)
         {
-            throw json_parser_exception(
+            ARGO_THROW( json_parser_exception,
                         json_parser_exception::invalid_character_e,
                         static_cast<char>(c),
                         m_reader.get_byte_index());
@@ -291,7 +291,7 @@ void lexer::read_string()
         {
             if (n >= m_max_token_length)
             {
-                throw json_parser_exception(
+                ARGO_THROW( json_parser_exception,
                             json_parser_exception::string_too_long_e,
                             m_max_token_length,
                             m_reader.get_byte_index());
@@ -332,7 +332,7 @@ void lexer::read_matching(const char *s)
 
         if (c != s[i++])
         {
-            throw json_parser_exception(json_parser_exception::invalid_character_e, c, m_reader.get_byte_index());
+            ARGO_THROW( json_parser_exception,json_parser_exception::invalid_character_e, c, m_reader.get_byte_index());
         }
     }
 }

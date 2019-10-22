@@ -550,7 +550,7 @@ const json &json::insert(const string &name, unique_ptr<json> j)
     }
     else
     {
-        throw json_exception(json_exception::not_an_object_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_an_object_e, get_instance_type_name());
     }
 }
 
@@ -593,7 +593,7 @@ bool json::number_equal(const json &other) const
     }
     else
     {
-        throw json_exception(json_exception::cant_compare_raw_e);
+        ARGO_THROW(json_exception, json_exception::cant_compare_raw_e);
     }
 }
 
@@ -605,7 +605,7 @@ bool json::string_equal(const json &other) const
     }
     else
     {
-        throw json_exception(json_exception::cant_compare_raw_e);
+        ARGO_THROW(json_exception, json_exception::cant_compare_raw_e);
     }
 }
 
@@ -652,7 +652,7 @@ bool json::operator==(const json &other) const
         case string_e:
             return string_equal(other);
         default:
-            throw json_exception(json_exception::invalid_json_type_e);
+            ARGO_THROW( json_exception,json_exception::invalid_json_type_e);
         }
     }
     else if ((m_type == number_int_e && other.m_type == number_double_e) ||
@@ -810,7 +810,7 @@ bool json::operator<(const json &other) const
     }
     else
     {
-        throw json_exception(
+        ARGO_THROW( json_exception,
                         json_exception::types_not_comparable_e,
                         get_instance_type_name(),
                         other.get_instance_type_name());
@@ -835,7 +835,7 @@ bool json::operator<=(const json &other) const
     }
     else
     {
-        throw json_exception(
+        ARGO_THROW( json_exception,
                         json_exception::types_not_comparable_e,
                         get_instance_type_name(),
                         other.get_instance_type_name());
@@ -869,7 +869,7 @@ const json &json::find(const pointer &p) const
                 auto i = res->m_value.u_object->find(t.get_name());
                 if (i == res->m_value.u_object->end())
                 {
-                    throw json_exception(json_exception::pointer_not_matched_e);
+                    ARGO_THROW( json_exception,json_exception::pointer_not_matched_e);
                 }
                 else
                 {
@@ -878,7 +878,7 @@ const json &json::find(const pointer &p) const
             }
             else
             {
-                throw json_exception(json_exception::pointer_not_matched_e);
+                ARGO_THROW( json_exception,json_exception::pointer_not_matched_e);
             }
             break;
 
@@ -891,17 +891,17 @@ const json &json::find(const pointer &p) const
                 }
                 else
                 {
-                    throw json_exception(json_exception::pointer_not_matched_e);
+                    ARGO_THROW( json_exception,json_exception::pointer_not_matched_e);
                 }
             }
             else
             {
-                throw json_exception(json_exception::pointer_not_matched_e);
+                ARGO_THROW( json_exception,json_exception::pointer_not_matched_e);
             }
             break;
 
         default:
-            throw json_exception(json_exception::pointer_token_type_invalid_e);
+            ARGO_THROW( json_exception,json_exception::pointer_token_type_invalid_e);
         }
     }
 

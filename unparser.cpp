@@ -144,7 +144,7 @@ void unparser::unparse(const json &j, int indent_level)
             m_writer << '"' << *(utf8::utf8_to_json_string(j)) << '"';
             break;
         default:
-            throw json_exception(json_exception::invalid_json_type_e);
+            ARGO_THROW(json_exception, json_exception::invalid_json_type_e);
         }
     }
     else
@@ -219,7 +219,7 @@ void unparser::save(
     }
     else
     {
-        throw json_io_exception(json_io_exception::file_open_failed_e, errno);
+        ARGO_THROW( json_io_exception,json_io_exception::file_open_failed_e, errno);
     }
 }
 

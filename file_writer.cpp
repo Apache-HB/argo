@@ -39,6 +39,6 @@ void file_writer::write(const string &s)
 {
     if (fwrite(s.c_str(), s.size(), 1, m_file) != 1)
     {
-        throw json_io_exception(json_io_exception::write_file_failed_e, errno);
+        ARGO_THROW( json_io_exception,json_io_exception::write_file_failed_e, errno);
     }
 }
