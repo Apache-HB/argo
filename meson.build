@@ -31,6 +31,8 @@ sources = [
 
 argo_lib = static_library('argo', sources)
 
+argo_dep = declare_dependency(link_with : argo_lib, include_direcotries : include_directories('.'))
+
 pkg_mod = import('pkgconfig')
 
 pkg_mod.generate(argo_lib,
