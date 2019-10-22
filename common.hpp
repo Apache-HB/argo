@@ -37,7 +37,7 @@
         // the number of crew-mates jason had at the start of his journey for the golden fleece
 #       define ARGO_EXIT_CODE 49
 #   endif
-#   define ARGO_THROW(Type, ...) { printf("ARGO error " ##Type "" ##__VA_ARGS__); std::exit(ARGO_EXIT_CODE); } 
+#   define ARGO_THROW(Type, ...) { printf("ARGO error " #Type "" #__VA_ARGS__); std::exit(ARGO_EXIT_CODE); } 
 #endif
 
 #ifndef ARGO_THROW

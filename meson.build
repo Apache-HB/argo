@@ -1,5 +1,8 @@
 project('argo', 'cpp',
-    default_options : [ 'cpp_std=c++11' ],
+    default_options : [ 
+        'cpp_std=c++11',
+        'cpp_eh=none'
+    ],
     version : '1.0.1',
     license : 'MIT'
 )
@@ -29,9 +32,21 @@ sources = [
     'pointer.cpp'
 ]
 
-argo_lib = static_library('argo', sources)
+#todo: make this configurable
+args = [
+    '-DARGO_NOTHROW',
+    '-fno-rtti'
+]
 
-argo_dep = declare_dependency(link_with : argo_lib, include_direcotries : include_directories('.'))
+argo_lib = static_library('argo', 
+    sources,
+    cpp_args : args
+)
+
+argo_dep = declare_dependency(
+    link_with : argo_lib, 
+    include_direcotries : include_directories('.')
+)
 
 pkg_mod = import('pkgconfig')
 
