@@ -40,12 +40,13 @@ args = [
 
 argo_lib = static_library('argo', 
     sources,
-    cpp_args : args
+    cpp_args : args,
+    install : true
 )
 
 argo_dep = declare_dependency(
     link_with : argo_lib, 
-    include_direcotries : include_directories('.')
+    include_directories : include_directories('.')
 )
 
 pkg_mod = import('pkgconfig')
