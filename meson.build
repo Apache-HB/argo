@@ -1,5 +1,5 @@
 project('argo', 'cpp',
-    default_options : [ 
+    default_options : [
         'cpp_std=c++11',
         'cpp_eh=none'
     ],
@@ -34,18 +34,23 @@ sources = [
 
 #todo: make this configurable
 args = [
-    '-DARGO_NOTHROW',
-    '-fno-rtti'
+    '-DARGO_NOTHROW'
 ]
 
-argo_lib = static_library('argo', 
+if meson.get_compiler('cpp').get_id() == 'msvc'
+    args += '/GR-'
+else
+    args += '-fno-rtti'
+endif
+
+argo_lib = static_library('argo',
     sources,
     cpp_args : args,
     install : true
 )
 
 argo_dep = declare_dependency(
-    link_with : argo_lib, 
+    link_with : argo_lib,
     include_directories : include_directories('.')
 )
 

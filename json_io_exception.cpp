@@ -7,10 +7,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -65,22 +65,22 @@ json_io_exception::json_io_exception(exception_type et, int posix_errno) noexcep
 {
     char buffer[max_message_length];
 
-    // strerror_r returns an int on clang, but a char* on msvc and gcc
+    // strerror_r returns an int on clang, but a char* on gcc
     // see https://linux.die.net/man/3/strerror_r
     snprintf(
-        m_message, 
-        max_message_length, 
-#if defined(__clang__)
-        "%s : %d", 
+        m_message,
+        max_message_length,
+#if defined(__clang__) || defined(_MSC_VER)
+        "%s : %d",
 #else
         "%s : %s",
 #endif
-        get_main_message(), 
+        get_main_message(),
         strerror_r(posix_errno, buffer, max_message_length)
     );
 }
 
 json_io_exception::json_io_exception(exception_type et, size_t s) noexcept : json_exception(et)
 {
-    snprintf(m_message, max_message_length, "%s : %ld", get_main_message(), s);
+    snprintf(m_message, max_message_length, "%s : %zd", get_main_message(), s);
 }
