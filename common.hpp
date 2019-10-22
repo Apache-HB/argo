@@ -26,7 +26,23 @@
 /// \file common.hpp Common defs needed everywhere and, as far as is possible, platform specific changes.
 
 /// You can change the namespace of the whole library by changing this value.
-#define NAMESPACE argo
+#ifndef NAMESPACE
+#   define NAMESPACE argo
+#endif
+
+#include <cstdlib>
+
+#ifdef ARGO_NOTHROW
+#   ifndef ARGO_EXIT_CODE
+        // the number of crew-mates jason had at the start of his journey for the golden fleece
+#       define ARGO_EXIT_CODE 49
+#   endif
+#   define ARGO_THROW(Type, ...) { printf("ARGO error " ##Type "" ##__VA_ARGS__); std::exit(ARGO_EXIT_CODE); } 
+#endif
+
+#ifndef ARGO_THROW
+#   define ARGO_THROW(Type, ...) throw Type(__VA_ARGS__)
+#endif
 
 #ifdef _MSC_VER
 #define strerror_r(e, b, l) strerror_s(b, l, e)

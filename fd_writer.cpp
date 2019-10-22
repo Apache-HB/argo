@@ -46,6 +46,6 @@ void fd_writer::write(const string &s)
 {
     if (::write(m_fd, s.c_str(), s.size()) == -1)
     {
-        throw json_io_exception(json_io_exception::write_fd_failed_e, errno);
+        ARGO_THROW(json_io_exception, json_io_exception::write_fd_failed_e, errno);
     }
 }

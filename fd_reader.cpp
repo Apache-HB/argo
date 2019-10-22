@@ -59,11 +59,11 @@ int fd_reader::read_next_char()
     }
     else if (n == -1)
     {
-        throw json_io_exception(json_io_exception::read_failed_e, errno);
+        ARGO_THROW(json_io_exception, json_io_exception::read_failed_e, errno);
     }
     else
     {
-        throw json_io_exception(json_io_exception::unexpected_result_from_read_e);
+        ARGO_THROW(json_io_exception, json_io_exception::unexpected_result_from_read_e);
     }
 }
 
@@ -77,7 +77,7 @@ bool fd_reader::read_next_block()
     }
     else if (n == -1)
     {
-        throw json_io_exception(json_io_exception::read_failed_e, errno);
+        ARGO_THROW(json_io_exception, json_io_exception::read_failed_e, errno);
     }
     else
     {

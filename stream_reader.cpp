@@ -61,7 +61,7 @@ bool stream_reader::read_next_block()
         }
         else
         {
-            throw json_io_exception(json_io_exception::read_failed_e, errno);
+            ARGO_THROW(json_io_exception, json_io_exception::read_failed_e, errno);
         }
     }
 }

@@ -43,7 +43,7 @@ unsigned int utf8::from_hex(char c)
     }
     else
     {
-        throw json_utf8_exception(json_utf8_exception::invalid_hex_char_e, c);
+        ARGO_THROW(json_utf8_exception, json_utf8_exception::invalid_hex_char_e, c);
     }
 }
 
@@ -59,7 +59,7 @@ char utf8::to_hex(unsigned int i)
     }
     else
     {
-        throw json_utf8_exception(json_exception::invalid_hex_number_e, i);
+        ARGO_THROW(json_utf8_exception, json_exception::invalid_hex_number_e, i);
     }
 }
 
@@ -71,7 +71,7 @@ char utf8::next_char(const string &s, size_t &index)
     }
     else
     {
-        throw json_utf8_exception(json_utf8_exception::invalid_string_encoding_e, s);
+        ARGO_THROW(json_utf8_exception, json_utf8_exception::invalid_string_encoding_e, s);
     }
 }
 
@@ -91,7 +91,7 @@ void utf8::set_and_check_unicode_byte(string &dst, size_t &dst_index, char c)
 {
     if (c == 0)
     {
-        throw json_utf8_exception(json_utf8_exception::invalid_utf8_char_e, c);
+        ARGO_THROW(json_utf8_exception, json_utf8_exception::invalid_utf8_char_e, c);
     }
     else
     {
@@ -156,7 +156,7 @@ void utf8::parse_unicode(
     }
     else
     {
-        throw json_utf8_exception(json_utf8_exception::invalid_unicode_e, uc);
+        ARGO_THROW(json_utf8_exception, json_utf8_exception::invalid_unicode_e, uc);
     }
 }
 
@@ -205,7 +205,7 @@ unique_ptr<string> utf8::json_string_to_utf8(const string &src)
                 parse_unicode(src, src_index, *dst, dst_index);
                 break;
             default: 
-                throw json_utf8_exception(json_utf8_exception::invalid_string_escape_e, c);
+                ARGO_THROW(json_utf8_exception, json_utf8_exception::invalid_string_escape_e, c);
             }
         }
     }
@@ -270,7 +270,7 @@ unique_ptr<string> utf8::utf8_to_json_string(const string &src)
             uc |= next_char(src, src_index) & 0x3f;  
             break;
         default:
-            throw json_utf8_exception(json_utf8_exception::invalid_utf8_sequence_length_e, l);
+            ARGO_THROW(json_utf8_exception, json_utf8_exception::invalid_utf8_sequence_length_e, l);
         }
 
         if (uc <= 0xff)

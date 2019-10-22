@@ -44,7 +44,7 @@ int file_reader::read_next_char()
 
     if (c == EOF && ferror(m_file))
     {
-        throw json_io_exception(json_io_exception::fgetc_failed_e, errno);
+        ARGO_THROW(json_io_exception, json_io_exception::fgetc_failed_e, errno);
     }
     else
     {
@@ -66,7 +66,7 @@ bool file_reader::read_next_block()
     {
         if (ferror(m_file))
         {
-            throw json_io_exception(json_io_exception::read_failed_e, errno);
+            ARGO_THROW(json_io_exception, json_io_exception::read_failed_e, errno);
         }
         else
         {

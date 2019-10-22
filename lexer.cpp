@@ -133,7 +133,7 @@ void lexer::throw_number_exception(int c)
 {
     if (c == EOF)
     {
-        throw json_parser_exception(json_parser_exception::unexpected_eof_e, m_reader.get_byte_index());
+        json_parser_exception(json_parser_exception::unexpected_eof_e, m_reader.get_byte_index());
     }
     else
     {

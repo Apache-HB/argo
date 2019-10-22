@@ -164,7 +164,7 @@ json::json(type t) : m_type(t)
     case null_e:
         break;
     default:
-        throw json_exception(json_exception::invalid_json_type_e);
+        ARGO_THROW(json_exception, json_exception::invalid_json_type_e);
         break;
     }
 }
@@ -173,7 +173,7 @@ json::json(type t, const string &raw_value) : m_type(t), m_raw_value(raw_value)
 {
     if (t != string_e && t != number_int_e && t != number_double_e)
     {
-        throw json_exception(json_exception::not_number_or_string_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_number_or_string_e, get_instance_type_name());
     }
 
     // just in case this is a string
@@ -336,7 +336,7 @@ json::operator int() const
 {
     if (m_raw_value.size() > 0)
     {
-        throw json_exception(json_exception::cant_cast_raw_e);
+        ARGO_THROW(json_exception, json_exception::cant_cast_raw_e);
     }
     else if (m_type == number_int_e)
     {
@@ -348,7 +348,7 @@ json::operator int() const
     }
     else
     {
-        throw json_exception(json_exception::not_number_e);
+        ARGO_THROW(json_exception, json_exception::not_number_e);
     }
 }
 
@@ -356,7 +356,7 @@ json::operator double() const
 {
     if (m_raw_value.size() > 0)
     {
-        throw json_exception(json_exception::cant_cast_raw_e);
+        ARGO_THROW(json_exception, json_exception::cant_cast_raw_e);
     }
     else if (m_type == number_double_e)
     {
@@ -368,7 +368,7 @@ json::operator double() const
     }
     else
     {
-        throw json_exception(json_exception::not_number_e);
+        ARGO_THROW(json_exception, json_exception::not_number_e);
     }
 }
 
@@ -376,7 +376,7 @@ json::operator const std::string&() const
 {
     if (m_raw_value.size() > 0)
     {
-        throw json_exception(json_exception::cant_cast_raw_e);
+        ARGO_THROW(json_exception, json_exception::cant_cast_raw_e);
     }
     else if (m_type == string_e)
     {
@@ -384,7 +384,7 @@ json::operator const std::string&() const
     }
     else
     {
-        throw json_exception(json_exception::not_string_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_string_e, get_instance_type_name());
     }
 }
 
@@ -400,7 +400,7 @@ json::operator bool() const
     }
     else
     {
-        throw json_exception(json_exception::not_number_int_or_boolean_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_number_int_or_boolean_e, get_instance_type_name());
     }
 }
 
@@ -420,7 +420,7 @@ json &json::operator[](const string &name)
     }
     else
     {
-        throw json_exception(json_exception::not_an_object_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_an_object_e, get_instance_type_name());
     }
 }
 
@@ -439,12 +439,12 @@ json &json::operator[](size_t index)
         }
         else
         {
-            throw json_array_index_range_exception(json_exception::array_index_range_e, index);
+            ARGO_THROW(json_array_index_range_exception, json_exception::array_index_range_e, index);
         }
     }
     else
     {
-        throw json_exception(json_exception::not_an_array_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_an_array_e, get_instance_type_name());
     }
 }
 
@@ -456,7 +456,7 @@ json &json::operator[](int index)
     }
     else
     {
-        throw json_array_index_range_exception(json_exception::array_index_range_e, index);
+        ARGO_THROW(json_array_index_range_exception, json_exception::array_index_range_e, index);
     }
 }
 
@@ -470,12 +470,12 @@ const json &json::operator[](size_t index) const
         }
         else
         {
-            throw json_array_index_range_exception(json_exception::array_index_range_e, index);
+            ARGO_THROW(json_array_index_range_exception, json_exception::array_index_range_e, index);
         }
     }
     else
     {
-        throw json_exception(json_exception::not_an_array_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_an_array_e, get_instance_type_name());
     }
 }
 
@@ -487,7 +487,7 @@ const json &json::operator[](int index) const
     }
     else
     {
-        throw json_array_index_range_exception(json_exception::array_index_range_e, index);
+        ARGO_THROW(json_array_index_range_exception, json_exception::array_index_range_e, index);
     }
 }
 
@@ -498,7 +498,7 @@ const json &json::operator[](const string &name) const
         auto i = m_value.u_object->find(name);
         if (i == m_value.u_object->end())
         {
-            throw json_invalid_key_exception(json_exception::invalid_key_e, name);
+            ARGO_THROW(json_invalid_key_exception, json_exception::invalid_key_e, name);
         }
         else
         {
@@ -507,7 +507,7 @@ const json &json::operator[](const string &name) const
     }
     else
     {
-        throw json_exception(json_exception::not_an_object_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_an_object_e, get_instance_type_name());
     }
 }
 
@@ -531,7 +531,7 @@ const json &json::append(unique_ptr<json> j)
     }
     else
     {
-        throw json_exception(json_exception::not_an_array_e, get_instance_type_name());
+        ARGO_THROW(json_exception, json_exception::not_an_array_e, get_instance_type_name());
     }
 }
 
