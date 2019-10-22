@@ -38,7 +38,7 @@ args = [
 ]
 
 if meson.get_compiler('cpp').get_id() == 'msvc'
-    args += '/GR-'
+    args += [ '/GR-', '/EHsc-' ]
 else
     args += '-fno-rtti'
 endif
