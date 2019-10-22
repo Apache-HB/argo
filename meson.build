@@ -57,9 +57,11 @@ pkg_mod.generate(argo_lib,
     description : 'C++ JSON parser'
 )
 
-tests = executable('tests', 'json_test.cpp', link_with : argo_lib)
 
-test('JSON tests', tests)
+#todo: add this back in
+
+#tests = executable('tests', 'json_test.cpp', link_with : argo_lib)
+#test('JSON tests', tests)
 
 #doxygen configuration
 doxygen = find_program('doxygen', required : false)
